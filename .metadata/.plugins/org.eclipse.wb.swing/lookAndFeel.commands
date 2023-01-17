@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commands>
+	<add id="laf_1669009485642" name="Acryl" class-name="com.jtattoo.plaf.acryl.AcrylLookAndFeel" jar-path="C:\Users\Poojitha\Downloads\JTattoo-1.6.13.jar" category-id="__wbp_laf_root"/>
+	<add id="laf_1669009485642" name="Acryl" class-name="com.jtattoo.plaf.acryl.AcrylLookAndFeel" jar-path="C:\Users\Poojitha\Downloads\JTattoo-1.6.13.jar" category-id="__wbp_laf_root"/>
+	<add id="laf_1669009562449" name="Mint" class-name="com.jtattoo.plaf.mint.MintLookAndFeel" jar-path="C:\Users\Poojitha\Downloads\JTattoo-1.6.13.jar" category-id="__wbp_laf_root"/>
+	<add id="laf_1669009562449" name="Mint" class-name="com.jtattoo.plaf.mint.MintLookAndFeel" jar-path="C:\Users\Poojitha\Downloads\JTattoo-1.6.13.jar" category-id="__wbp_laf_root"/>
+	<set-visible id="laf_1669009485642" visible="true"/>
+</commands>

@@ -1,0 +1,23 @@
+package com.prowess.controllers;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.prowess.demo.dto.ProductDto;
+
+import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+
+public class StudentController {
+
+	@PostMapping("/")
+	@Operation(tags = {"Product"})
+	@ApiOperation(value = "Create ProductDto", consumes = "application/json",produces = "application/json", response = Product.class)
+	public ResponseEntity<ProductDto> create(@RequestBody ProductDto ProductDto) {
+		ProductDto ProductDto_dto = productService.save(ProductDto);
+		return new ResponseEntity<>(ProductDto_dto, HttpStatus.CREATED);
+	}
+	
+}

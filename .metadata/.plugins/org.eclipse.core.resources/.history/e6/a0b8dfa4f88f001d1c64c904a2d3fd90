@@ -1,0 +1,16 @@
+package realtimeproject;
+
+import java.io.FileNotFoundException;
+
+public class practise {	
+	void m1() {
+		int i = 10;
+		int j = 0;
+		try {
+			int k = i/j;
+			System.out.println(k);
+		}catch (ArithmeticException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+}

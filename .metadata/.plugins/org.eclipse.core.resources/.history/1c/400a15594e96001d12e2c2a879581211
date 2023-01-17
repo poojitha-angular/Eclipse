@@ -1,0 +1,8 @@
+package com.prowess.service;
+
+import com.prowess.entities.Student;
+
+public class StudentService {
+
+	
+}

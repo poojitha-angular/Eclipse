@@ -1,0 +1,5 @@
+package com.prowess.entities;
+
+public class Student {
+
+}

@@ -1,0 +1,21 @@
+package realtimeproject;
+
+import java.io.FileNotFoundException;
+
+public class practise {	
+	public void topMethod(){
+		try{
+		excMethod();
+		}catch(ManualException e){ }
+		}
+
+		
+
+		public void excMethod{
+		String name=null;
+		if(name == null){
+		throw (new ManualException("Exception thrown manually ");
+		}
+		}
+
+}

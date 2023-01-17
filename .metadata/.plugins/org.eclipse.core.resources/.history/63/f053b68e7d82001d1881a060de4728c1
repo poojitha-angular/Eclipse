@@ -1,0 +1,12 @@
+package com.comparator.examples;
+
+import java.util.ArrayList;
+
+public class NameComparator {
+
+	public static void main(String[] args) {
+		ArrayList<Student> a =new ArrayList<>();
+		a.add(new Student(100,"Pooja",21));
+		a.add(new Student(101,"Pooja1",22));
+		a.add(new Student(100,"Pooja2",23));
+}

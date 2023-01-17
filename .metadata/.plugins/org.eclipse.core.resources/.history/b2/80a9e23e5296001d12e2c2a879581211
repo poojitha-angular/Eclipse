@@ -1,0 +1,6 @@
+package com.prowess.demo;
+
+public class StudentApplication {
+
+	   SpringApplication.run(StudentApplication.class, args);
+}

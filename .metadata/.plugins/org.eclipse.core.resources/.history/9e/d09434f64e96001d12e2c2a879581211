@@ -1,0 +1,20 @@
+package com.prowess.service;
+
+import com.prowess.demo.entities.Product;
+import com.prowess.entities.Student;
+
+public class StudentService {
+
+	public static Student save(Student student) {
+		
+		Student stdnt= new Student();
+		stdnt.setName(student.getName());
+		stdnt.setMarks(student.getMarks());
+		Product prd=productRepo.save(product);
+		productDto.setId(prd.getId());
+		return productDto;
+		return student;
+	}
+
+	
+}

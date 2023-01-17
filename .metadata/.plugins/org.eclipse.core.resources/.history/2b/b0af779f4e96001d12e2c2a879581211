@@ -1,0 +1,14 @@
+package com.prowess.service;
+
+import com.prowess.entities.Student;
+
+public class StudentService {
+
+	public static Student save(Student student) {
+		
+		Student student1= new Student();
+		return null;
+	}
+
+	
+}

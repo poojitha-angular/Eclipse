@@ -1,0 +1,5 @@
+package com.prowess.service;
+
+public class StudentService {
+
+}

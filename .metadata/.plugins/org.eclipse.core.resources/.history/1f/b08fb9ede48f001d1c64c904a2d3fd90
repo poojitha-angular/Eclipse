@@ -1,0 +1,15 @@
+package com.prowess.streams;
+
+import java.util.ArrayList;
+
+public class Product {
+	
+public void listOfProdocts() {
+	ArrayList<product> prodlist=new ArrayList<>();
+	
+}
+public static void main(String[] args) {
+	Product product=new Product();
+}
+
+}

@@ -1,0 +1,29 @@
+package com.comparator.examples;
+
+import java.util.ArrayList;
+
+import java.util.Collections;
+import java.util.Iterator;
+
+public class MainClass {
+
+	public static void main(String[] args) {
+		ArrayList<Student> a =new ArrayList<>();
+		a.add(new Student(100,"Pooja",21));
+		a.add(new Student(101,"Pooja1",22));
+		a.add(new Student(100,"Pooja2",23));
+		
+		System.out.println("Sorting by age:");
+		Collections.sort(a, new AgeComparator());
+		Iterator<Student> itr=a.iterator();		
+		while(itr.hasNext())
+		{
+			Student st = itr.next();
+			
+
+		}
+	
+
+	}
+
+}

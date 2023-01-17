@@ -1,0 +1,5 @@
+package com.prowess.dao;
+
+public class StudentRepository {
+
+}

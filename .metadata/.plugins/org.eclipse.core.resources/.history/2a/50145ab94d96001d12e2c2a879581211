@@ -1,0 +1,5 @@
+package com.prowess.controllers;
+
+public class StudentController {
+
+}

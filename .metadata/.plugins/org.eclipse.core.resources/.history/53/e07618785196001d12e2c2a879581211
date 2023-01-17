@@ -1,0 +1,24 @@
+package com.prowess.service;
+
+import org.springframework.stereotype.Service;
+
+import com.prowess.dao.StudentRepository;
+import com.prowess.entities.Student;
+
+@Service
+public class StudentService {
+
+	public static Student saveStudent(Student student) {
+		
+		Student stdnt= new Student();
+		stdnt.setName(student.getName());
+		stdnt.setMarks(student.getMarks());
+//		Student st=student.save(stdnt);
+		
+
+		student.setId(st.getId());
+		return student;
+	}
+
+	
+}

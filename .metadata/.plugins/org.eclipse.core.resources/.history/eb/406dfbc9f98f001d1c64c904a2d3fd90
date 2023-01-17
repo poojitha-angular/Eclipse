@@ -1,0 +1,16 @@
+package realtimeproject;
+
+
+public class practise {	
+	void m1() {
+		 int x = 0;
+	        int y = 1;
+	        int z = x/ y;
+       System.out.println(z);
+	}	
+	public static void main(String[] args) {
+		Sample s = new Sample();
+		s.m1();
+	}
+}
+

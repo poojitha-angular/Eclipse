@@ -1,0 +1,331 @@
+package com.prowess.bms.dao;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import com.mysql.cj.jdbc.CallableStatement;
+import com.prowess.bms.common.CC;
+import com.prowess.bms.interfaces.BookInterface;
+import com.prowess.bms.vo.BookVO;
+
+public class BookDAO implements BookInterface {
+
+	BookVO bvo = new BookVO();
+	ArrayList<BookVO> list_of_books = new ArrayList<>();
+
+	public void registerBookintoDB(BookVO bk) {
+		String book_details_query = "insert into book value(?,?,?,?,?,?,?,?,?,?,?,?)";
+		try {
+
+			PreparedStatement pst = CC.getDBConnection().prepareStatement(book_details_query);
+			pst.setInt(1, bk.getBookId());
+			pst.setString(2, bk.getBookName());
+			pst.setInt(3, bk.getPublishYear());
+			pst.setString(4, bk.getBookAuthor());
+			pst.setFloat(5, bk.getBookPrice());
+			pst.setString(6, bk.getCity());
+			pst.setString(7, bk.getGenere());
+			pst.setBoolean(8, bk.getInStock());
+			pst.setString(9, bk.getIsActive());
+			pst.setTimestamp(10, new Timestamp(System.currentTimeMillis()));
+			pst.setString(11, bk.getCreatedBy());
+			pst.setBlob(12, new FileInputStream(bk.getFilePath()));
+
+			int i = pst.executeUpdate();
+			System.out.println(i + " rows inserted");
+
+		} catch (SQLException | FileNotFoundException e) {
+
+			e.printStackTrace();
+		} 
+	}
+
+	public boolean isIDexistsOrNot(int b_id) {
+		boolean flag = false;
+		try {
+			PreparedStatement pst = CC.getDBConnection().prepareStatement(CC.GET_BOOK_DETAILS_BYID);
+			pst.setInt(1, b_id);
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				flag = true;
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		return flag;
+
+	}
+
+	public List<BookVO> getAllBookDetails() {
+		List<BookVO> list_of_books = new ArrayList<>();
+
+		try {
+			Statement st = CC.getDBConnection().createStatement();
+			ResultSet rs = st.executeQuery(CC.GET_LIST_OF_BOOKS);
+			String filepath = "D:/get_book_image/death1.jpg";
+			OutputStream out = new FileOutputStream(filepath);
+
+			while (rs.next()) {
+				BookVO bvo = new BookVO();
+
+				bvo.setBookId(rs.getInt(1));
+				bvo.setBookName(rs.getString(2));
+				bvo.setPublishYear(rs.getInt(3));
+				bvo.setBookAuthor(rs.getString(4));
+				bvo.setBookPrice(rs.getFloat(5));
+				bvo.setCity(rs.getString(6));
+				bvo.setGenere(rs.getString(7));
+				bvo.setInStock(rs.getBoolean(8));
+				bvo.setIsActive(rs.getString(9));
+				bvo.setCreated(rs.getTimestamp(10));
+				bvo.setCreatedBy(rs.getString(11));
+				
+				java.sql.Blob b = rs.getBlob(12);
+				if(b!= null) {
+				out.write(b.getBytes(1, (int) b.length()));
+				}
+				else
+					System.out.println("Image not found");
+				list_of_books.add(bvo);
+				System.out.println("Success");
+
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+		return list_of_books;
+	}
+
+	public int recordsDeletion(int bookId) {
+		int i = 0;
+		try {
+			PreparedStatement pst = CC.getDBConnection().prepareStatement(CC.DELETION_OF_RECORDS);
+			pst.setInt(1, bookId);
+			i = pst.executeUpdate();
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return i;
+	}
+
+	public BookVO searchByID(int book_id) {
+
+		try {
+			PreparedStatement pst = CC.getDBConnection().prepareStatement(CC.GET_BOOK_DETAILS_BYID);
+			pst.setInt(1, book_id);
+
+			ResultSet rs = pst.executeQuery();
+			if (rs.next()) {
+				bvo.setBookId(rs.getInt(1));
+				bvo.setBookName(rs.getString(2));
+				bvo.setPublishYear(rs.getInt(3));
+				bvo.setBookAuthor(rs.getString(4));
+				bvo.setBookPrice(rs.getFloat(5));
+				bvo.setGenere(rs.getString(6));
+
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return bvo;
+
+	}
+
+	public ArrayList<BookVO> searchByAuthor(String author_name) {
+		ArrayList<BookVO> list_of_books = new ArrayList<>();
+		try {
+			PreparedStatement pst = CC.getDBConnection().prepareStatement(CC.GET_LIST_OF_BOOKS_BYAUTHOR);
+			pst.setString(1, author_name);
+
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				bvo.setBookName(rs.getString(2));
+				list_of_books.add(bvo);
+
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return list_of_books;
+	}
+
+	public ArrayList<BookVO> searchBookByActive(String active_status) {
+
+		ArrayList<BookVO> list_of_books = new ArrayList<>();
+		try {
+			PreparedStatement pst = CC.getDBConnection().prepareStatement(CC.GET_LIST_OF_BOOKS_BYACTIVE);
+			pst.setString(1, active_status);
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				BookVO bvo = new BookVO();
+				bvo.setBookId(rs.getInt(1));
+				bvo.setBookName(rs.getString(2));
+				bvo.setPublishYear(rs.getInt(3));
+				bvo.setBookAuthor(rs.getString(4));
+				bvo.setBookPrice(rs.getFloat(5));
+				list_of_books.add(bvo);
+
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		return list_of_books;
+	}
+
+	public ArrayList<BookVO> searchBookByItsStock(Boolean instock) {
+
+		try {
+			PreparedStatement pst = CC.getDBConnection().prepareStatement(CC.GET_LIST_OF_BOOKS_BYSTOCK);
+			pst.setBoolean(1, instock);
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				BookVO bvo = new BookVO();
+				bvo.setBookId(rs.getInt(1));
+				bvo.setBookName(rs.getString(2));
+				bvo.setPublishYear(rs.getInt(3));
+				bvo.setBookAuthor(rs.getString(4));
+				bvo.setBookPrice(rs.getFloat(5));
+				list_of_books.add(bvo);
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		return list_of_books;
+	}
+
+	public ArrayList<BookVO> searchBookByCity(String city) {
+		try {
+			PreparedStatement pst = CC.getDBConnection().prepareStatement(CC.GET_LIST_OF_BOOKS_BYCITY);
+			pst.setString(1, city);
+
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				BookVO bvo = new BookVO();
+				bvo.setBookId(rs.getInt(1));
+				bvo.setBookName(rs.getString(2));
+				bvo.setPublishYear(rs.getInt(3));
+				bvo.setBookAuthor(rs.getString(4));
+				bvo.setBookPrice(rs.getFloat(5));
+				list_of_books.add(bvo);
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return list_of_books;
+	}
+
+	public ArrayList<BookVO> searchBookByPriceInBetween(float starting_price, float end_price) {
+
+		try {
+			PreparedStatement pst = CC.getDBConnection().prepareStatement(CC.GET_LIST_OF_BOOKS_BYPRICE);
+			pst.setFloat(1, starting_price);
+			pst.setFloat(2, end_price);
+
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				BookVO bvo = new BookVO();
+				bvo.setBookId(rs.getInt(1));
+				bvo.setBookName(rs.getString(2));
+				bvo.setPublishYear(rs.getInt(3));
+				bvo.setBookAuthor(rs.getString(4));
+				bvo.setBookPrice(rs.getFloat(5));
+
+				list_of_books.add(bvo);
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		return list_of_books;
+	}
+
+	public ArrayList<BookVO> searchBookByGenere(String genre) {
+		try {
+			PreparedStatement pst = CC.getDBConnection().prepareStatement(CC.GET_LIST_OF_BOOKS_BYGENRE);
+			pst.setString(1, genre);
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				BookVO bvo = new BookVO();
+				bvo.setBookId(rs.getInt(1));
+				bvo.setBookName(rs.getString(2));
+				bvo.setPublishYear(rs.getInt(3));
+				bvo.setBookAuthor(rs.getString(4));
+				bvo.setBookPrice(rs.getFloat(5));
+
+				list_of_books.add(bvo);
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return list_of_books;
+	}
+
+	public int updateCity(String city, int book_id) {
+		int i = 0;
+		try {
+			PreparedStatement pst = CC.getDBConnection().prepareStatement(CC.UPDATE_BYCITY);
+			pst.setString(1, city);
+			pst.setInt(2, book_id);
+
+			i = pst.executeUpdate();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return i;
+	}
+
+	
+	public float updatePriceByDiscount(int book_id, int discount) {
+		boolean i;
+		try {
+			CallableStatement cst=(CallableStatement) CC.getDBConnection().prepareCall("{call updatePrice(book_id,discount,@bk_price)}");
+			cst.setInt(1, book_id);
+			cst.setInt(2, discount);
+			i=cst.execute();
+			
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return i;
+		
+		
+	}
+
+
+
+	
+}

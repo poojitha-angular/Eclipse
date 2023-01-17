@@ -1,0 +1,4 @@
+1672648667915	Rename type 'GetListOfBooks'
+1672648691801	Rename type 'DeleteBook'
+1672733907486	Rename field 'bookImage'
+1672809510059	Infer generic type arguments

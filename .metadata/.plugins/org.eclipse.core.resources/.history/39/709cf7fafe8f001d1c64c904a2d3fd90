@@ -1,0 +1,7 @@
+package realtimeproject;
+
+public interface MyInterface {
+	Public abstract final void printMyName();
+	Public abstract final String getMyList();
+
+}

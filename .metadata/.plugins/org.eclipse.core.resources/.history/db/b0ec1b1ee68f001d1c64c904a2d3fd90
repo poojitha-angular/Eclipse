@@ -1,0 +1,27 @@
+package com.prowess.streams;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class Product {
+	
+public void listOfProducts() {
+	ArrayList<ProductVO> prodlist=new ArrayList<>();
+	
+	prodlist.add(new ProductVO(1,"Apple",900000f));
+	prodlist.add(new ProductVO(2,"Samsung",20000f));
+	prodlist.add(new ProductVO(3,"HP",400000f));
+	prodlist.add(new ProductVO(4,"Lenova",30000f));
+	
+	
+	List<Float> prodList2 = prodlist.stream().filter(p->p.price >30000).map(p->price).collect(Collectors.toList());
+	System.out.println(prodList2);
+	
+}
+public static void main(String[] args) {
+	Product product=new Product();
+	product.listOfProducts();
+}
+
+}

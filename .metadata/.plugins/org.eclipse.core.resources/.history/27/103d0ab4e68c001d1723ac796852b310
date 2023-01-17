@@ -1,0 +1,33 @@
+package com.prowess.bms.action;
+
+import java.util.Scanner;
+
+import com.prowess.bms.dao.BookDAO;
+import com.prowess.bms.interfaces.BookInterface;
+
+public class UpdateBookAction {
+	BookInterface bi=new BookDAO();
+	public void updateRecord(int book_id) {
+	
+	Scanner sc=new Scanner(System.in);
+
+		if(bi.isIDexistsOrNot(book_id)) {
+			System.out.println("Record exists enter the city to be updated");
+			String city=sc.next();
+			int i=bi.updateCity(city, book_id);
+			if(i==1) {
+				System.out.println("Record was updated with "+ city + " for Book: "+ book_id );
+			}
+			else
+				System.out.println("NO record found to update");
+			
+		}
+	}
+
+	public void updateBookPriceWithDiscount() {
+		bi.updatePriceByDiscount(book_id,discount());
+		
+		
+	}
+
+}

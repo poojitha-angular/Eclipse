@@ -1,0 +1,28 @@
+package com.prowess.bms.interfaces;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.prowess.bms.vo.BookVO;
+
+public interface BookInterface {
+
+	void registerBookintoDB(BookVO bk);
+
+	public boolean isIDexistsOrNot(int id);
+
+	List<BookVO> getAllBookDetails();
+
+	public int recordsDeletion(int i);
+	public BookVO searchByID(int book_id);
+	public ArrayList<BookVO> searchByAuthor(String author_name);
+	public ArrayList<BookVO> searchBookByActive(String active_status);
+	public ArrayList<BookVO> searchBookByItsStock(Boolean instock);
+	public ArrayList<BookVO> searchBookByCity(String city);
+	public ArrayList<BookVO>  searchBookByPriceInBetween(float starting_price,float end_price);
+	public ArrayList<BookVO> searchBookByGenere(String genre);
+
+	int updateCity(String city,int book_id);
+	public int updatePriceByDiscount(int book_id,int discount);
+
+}
